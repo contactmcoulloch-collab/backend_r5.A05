@@ -4,6 +4,8 @@ import java.sql.Date;
 
 import org.jspecify.annotations.Nullable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,26 +16,35 @@ import jakarta.persistence.Table;
 @Entity // This tells Hibernate to make a table out of this class
 @Table (name = "joueur")
 public class Joueur {
+  
   @Id
-  @GeneratedValue(strategy=GenerationType.IDENTITY)
-  @Column(name = "joueur_id")
-   private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "joueur_id")
+    @JsonProperty("joueurId")
+    private Integer id;
 
- @Column(name = "nom")
-  private String nom;
+    @Column(name = "nom")
+    private String nom;
 
-  @Column(name = "prenom")
-  private String prenom;
-@Column(name = "date_naissance")
-  private Date date_naissance;
-@Column(name = "taille")
-  private int taille;
-@Column(name = "poids")
-  private int poids;
-@Column(name = "numero_licence")
-  private String numero_licence;
-@Column(name = "statut")
-  private String statut;
+    @Column(name = "prenom")
+    private String prenom;
+
+    @Column(name = "date_naissance")
+    @JsonProperty("dateNaissance")
+    private Date date_naissance;
+
+    @Column(name = "taille")
+    private int taille;
+
+    @Column(name = "poids")
+    private int poids;
+
+    @Column(name = "numero_licence")
+    @JsonProperty("numeroLicence")
+    private String numero_licence;
+
+    @Column(name = "statut")
+    private String statut;
 
   public Integer getId() {
     return id;
