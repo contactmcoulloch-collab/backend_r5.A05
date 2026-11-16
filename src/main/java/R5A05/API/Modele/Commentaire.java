@@ -1,4 +1,4 @@
-package R5.A05.API.Modele;
+package R5A05.API.Modele;
 
 import java.sql.Date;
 
@@ -20,7 +20,7 @@ public class Commentaire {
   @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "commentaire_id")
-    private Integer id;
+    private Integer commentaire_id;
 
     @Column(name = "contenu")
     private String contenu;
@@ -29,13 +29,15 @@ public class Commentaire {
     @JsonProperty("date")
     private Date date;
 
+    @JsonProperty("joueurId")
     @Column(name = "joueur_id")
     private int joueur_id;
-  public Integer getId() {
-    return id;
+    
+  public Integer getCommentaire_id() {
+    return commentaire_id;
   }
-  public void setId(Integer id) {
-    this.id = id;
+  public void setCommentaire_id(Integer id) {
+    this.commentaire_id = id;
   }
   public String getContenu() {
     return contenu;

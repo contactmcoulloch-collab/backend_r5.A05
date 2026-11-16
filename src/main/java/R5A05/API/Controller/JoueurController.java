@@ -1,4 +1,4 @@
-package R5.A05.API.Controller;
+package R5A05.API.Controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import R5.A05.API.ApiApplication;
-import  R5.A05.API.Modele.Joueur;
+import R5A05.API.ApiApplication;
+import R5A05.API.Modele.Joueur;
+import R5A05.API.Repository.JoueurRepository;
 
 @RestController
 @RequestMapping("/joueurs")
@@ -31,8 +33,9 @@ public class JoueurController {
     }
 
     @GetMapping
-    public List<Joueur> getAllJoueurs() {
-        return joueurRepository.findAll();
+    public ResponseEntity<List<Joueur>> getAllJoueurs() {
+       List<Joueur> listeJoeurs = joueurRepository.findAll();
+       return ResponseEntity.status(HttpStatus.OK).body(listeJoeurs);
     }
 
      @GetMapping("/{id}")
@@ -41,17 +44,20 @@ public class JoueurController {
     }
 
     @PostMapping
-    public Joueur ajoutJoueur(@RequestBody Joueur nouveaJoueur){
-        return joueurRepository.save(nouveaJoueur);
-    }
+    public ResponseEntity<Joueur> ajoutJoueur(@RequestBody Joueur nouveauJoueur) {
+    Joueur joueurEnregistre = joueurRepository.save(nouveauJoueur);
+    return ResponseEntity.status(HttpStatus.CREATED).body(joueurEnregistre);
+}
 
-     @DeleteMapping ("/{id}")
-    public void delOneJoueur(@PathVariable Integer id) {
-        joueurRepository.deleteById(id);
-    }
+
+     @DeleteMapping("/{id}")
+public ResponseEntity<Void> delOneJoueur(@PathVariable Integer id) {
+    joueurRepository.deleteById(id);
+    return ResponseEntity.ok().build();
+}
 
     @PutMapping("/{id}")
-    public Joueur updateOneJoueur(@PathVariable Integer id, @RequestBody Joueur données) {
+    public ResponseEntity<Joueur> updateOneJoueur(@PathVariable Integer id, @RequestBody Joueur données) {
        Joueur joueurUpdate = joueurRepository.findById(id).orElseThrow(() -> new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
                     "Joueur introuvable"
@@ -63,7 +69,8 @@ public class JoueurController {
         joueurUpdate.setPoids(données.getPoids());
         joueurUpdate.setTaille(données.getTaille());
         joueurUpdate.setStatut(données.getStatut());
-        return joueurRepository.save(joueurUpdate);
+        Joueur joueurEnregistre = joueurRepository.save(joueurUpdate);
+        return ResponseEntity.status(HttpStatus.OK).body(joueurEnregistre);
     }
 }
 

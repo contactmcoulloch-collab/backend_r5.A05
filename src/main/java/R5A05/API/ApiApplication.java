@@ -1,4 +1,4 @@
-package R5.A05.API;
+package R5A05.API;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
